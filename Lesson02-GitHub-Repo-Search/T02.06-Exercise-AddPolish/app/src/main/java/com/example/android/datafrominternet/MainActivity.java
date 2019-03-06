@@ -27,6 +27,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.android.datafrominternet.utilities.GitSearchName;
+import com.example.android.datafrominternet.utilities.JsonGitResult;
 import com.google.gson.Gson;
 
 import com.example.android.datafrominternet.utilities.NetworkUtils;
@@ -117,7 +118,8 @@ public class MainActivity extends AppCompatActivity {
             if (githubSearchResults != null && !githubSearchResults.equals("")) {
                 // TODO (17) Call showJsonDataView if we have valid, non-null results
                 showJsonDataView();
-                mSearchResultsTextView.setText(githubSearchResults);
+                int total_found = JsonGitResult.getNumber(githubSearchResults);
+                mSearchResultsTextView.setText("Total: " + total_found);
                 Log.i("Info", githubSearchResults);
 
                 Gson gson = new Gson();
