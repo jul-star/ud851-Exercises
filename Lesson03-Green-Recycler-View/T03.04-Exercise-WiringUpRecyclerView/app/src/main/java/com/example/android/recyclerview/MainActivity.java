@@ -15,19 +15,34 @@
  */
 package com.example.android.recyclerview;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+
+import static android.graphics.Color.BLUE;
+import static android.graphics.Color.GREEN;
 
 public class MainActivity extends AppCompatActivity {
 
     // TODO (1) Create a private static final int called NUM_LIST_ITEMS and set it equal to 100
+    private static final int NUM_LIST_ITEMS = 10;
 
     // TODO (2) Create a GreenAdapter variable called mAdapter
     // TODO (3) Create a RecyclerView variable called mNumbersList
+    GreenAdapter mAdapter;
+    RecyclerView mNumbersList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         // TODO (4) Use findViewById to store a reference to the RecyclerView in mNumbersList
@@ -40,5 +55,40 @@ public class MainActivity extends AppCompatActivity {
         // TODO (8) Store a new GreenAdapter in mAdapter and pass it NUM_LIST_ITEMS
 
         // TODO (9) Set the GreenAdapter you created on mNumbersList
+
+        mNumbersList = (RecyclerView) findViewById(R.id.rv_numbers);
+        LinearLayoutManager LayoutManager = new LinearLayoutManager(this);
+        mNumbersList.setLayoutManager(LayoutManager);
+        mNumbersList.setHasFixedSize(true);
+        mAdapter = new GreenAdapter(NUM_LIST_ITEMS);
+        mNumbersList.setAdapter(mAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.it_reset:
+                ResetItems();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void ResetItems() {
+
+        int childs = mNumbersList.getChildCount();
+        for (int i = 0; i < childs; ++i) {
+            GreenAdapter.NumberViewHolder nvh = (GreenAdapter.NumberViewHolder) mNumbersList.findViewHolderForAdapterPosition(i);
+            nvh.myView.setBackgroundColor(BLUE - i * 2);
+            nvh.listItemNumberView.setBackgroundColor(GREEN + i * 2);
+        }
     }
 }

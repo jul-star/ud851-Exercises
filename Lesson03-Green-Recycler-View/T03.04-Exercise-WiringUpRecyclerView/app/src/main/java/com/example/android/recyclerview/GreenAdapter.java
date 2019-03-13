@@ -109,6 +109,7 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
 
         // Will display the position in the list, ie 0 through getItemCount() - 1
         TextView listItemNumberView;
+        TextView myView;
 
         /**
          * Constructor for our ViewHolder. Within this constructor, we get a reference to our
@@ -121,6 +122,7 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
             super(itemView);
 
             listItemNumberView = (TextView) itemView.findViewById(R.id.tv_item_number);
+            myView = (TextView)itemView.findViewById(R.id.tv_my);
         }
 
         /**
@@ -130,6 +132,7 @@ public class GreenAdapter extends RecyclerView.Adapter<GreenAdapter.NumberViewHo
          */
         void bind(int listIndex) {
             listItemNumberView.setText(String.valueOf(listIndex));
+            myView.setText("Hello, Jul!");
         }
     }
 }
