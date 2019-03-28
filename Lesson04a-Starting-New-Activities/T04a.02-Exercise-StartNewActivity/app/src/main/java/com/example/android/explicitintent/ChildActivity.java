@@ -15,6 +15,7 @@
  */
 package com.example.android.explicitintent;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ public class ChildActivity extends AppCompatActivity {
     /* Field to store our TextView */
     private TextView mDisplayText;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,5 +33,11 @@ public class ChildActivity extends AppCompatActivity {
 
         /* Typical usage of findViewById... */
         mDisplayText = (TextView) findViewById(R.id.tv_display);
+
+        Intent intent = getIntent();
+        if(intent.hasExtra(Intent.EXTRA_TEXT))
+        {
+            mDisplayText.setText(intent.getStringExtra(Intent.EXTRA_TEXT));
+        }
     }
 }

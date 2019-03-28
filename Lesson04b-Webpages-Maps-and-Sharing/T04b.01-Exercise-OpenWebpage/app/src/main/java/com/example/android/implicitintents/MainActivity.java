@@ -15,10 +15,14 @@
  */
 package com.example.android.implicitintents;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
+
+import java.net.URI;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,9 +40,10 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onClickOpenWebpageButton(View v) {
         // TODO (5) Create a String that contains a URL ( make sure it starts with http:// or https:// )
-
+            String webpage = new String("http://udacity.com");
         // TODO (6) Replace the Toast with a call to openWebPage, passing in the URL String from the previous step
         Toast.makeText(this, "TODO: Open a web page when this button is clicked", Toast.LENGTH_SHORT).show();
+        openWebPage(webpage);
     }
 
     /**
@@ -78,6 +83,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // TODO (1) Create a method called openWebPage that accepts a String as a parameter
+    void openWebPage(String page)
+    {
+        Uri uri = Uri.parse(page);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        if(!(intent.resolveActivity(getPackageManager()) != null))
+        {
+            return;
+        }
+        startActivity(intent);
+    }
+
     // Do steps 2 - 4 within openWebPage
 
         // TODO (2) Use Uri.parse to parse the String into a Uri

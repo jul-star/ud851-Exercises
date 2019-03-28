@@ -16,6 +16,7 @@
 package com.example.android.implicitintents;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -49,11 +50,16 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onClickOpenAddressButton(View v) {
         // TODO (5) Store an address in a String
+        String address = new String("8 prospekt Bogolubova Dubna Moscow Region");
 
         // TODO (6) Use Uri.Builder with the appropriate scheme and query to form the Uri for the address
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("geo").path("0,0").appendQueryParameter("q", address);
+        Uri uri = builder.build();
 
         // TODO (7) Replace the Toast with a call to showMap, passing in the Uri from the previous step
         Toast.makeText(this, "TODO: Open a map when this button is clicked", Toast.LENGTH_SHORT).show();
+        ShowMap(uri);
     }
 
     /**
@@ -119,6 +125,14 @@ public class MainActivity extends AppCompatActivity {
         // TODO (3) Set the data of the Intent to the Uri passed into this method
 
         // TODO (4) Verify that this Intent can be launched and then call startActivity
-
+void ShowMap(Uri uri)
+{
+    Intent intent = new Intent(Intent.ACTION_VIEW);
+    intent.setData(uri);
+    if(intent.resolveActivity(getPackageManager()) != null)
+    {
+        startActivity(intent);
+    }
+}
 
 }
