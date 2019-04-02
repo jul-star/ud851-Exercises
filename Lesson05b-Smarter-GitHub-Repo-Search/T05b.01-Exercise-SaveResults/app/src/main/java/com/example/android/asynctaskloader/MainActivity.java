@@ -18,6 +18,7 @@ package com.example.android.asynctaskloader;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,8 +34,10 @@ import java.net.URL;
 public class MainActivity extends AppCompatActivity {
 
     // TODO (1) Create a static final key to store the query's URL
+    static final String UrlKey = "Query_URL";
 
     // TODO (2) Create a static final key to store the search's raw JSON
+    static final String JsonKey = "Json_Key";
 
     private EditText mSearchBoxEditText;
 
@@ -60,7 +63,23 @@ public class MainActivity extends AppCompatActivity {
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
 
         // TODO (9) If the savedInstanceState bundle is not null, set the text of the URL and search results TextView respectively
+
+        if(savedInstanceState!=null)
+        {
+            if(savedInstanceState.containsKey(UrlKey))
+            {
+                mUrlDisplayTextView.setText(savedInstanceState.getString(UrlKey));
+                Log.i(UrlKey, savedInstanceState.getString(UrlKey).toString());
+            }
+            if(savedInstanceState.containsKey(JsonKey))
+            {
+                Log.i(JsonKey, savedInstanceState.getString(JsonKey).toString());
+                mSearchResultsTextView.setText(savedInstanceState.getString(JsonKey));
+            }
+        }
     }
+
+
 
     /**
      * This method retrieves the search text from the EditText, constructs the
@@ -160,4 +179,11 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO (7) Put the contents of the TextView that contains our raw JSON search results into a variable
     // TODO (8) Using the key for the raw JSON search results, put the search results into the outState Bundle
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(UrlKey, mUrlDisplayTextView.getText().toString());
+        outState.putString(JsonKey, mSearchResultsTextView.getText().toString());
+    }
 }
